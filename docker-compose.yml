@@ -1,0 +1,43 @@
+version: '2'
+services:
+  # jaguer_node_service:
+  #   build: backend/.
+  #   image: barreiro/node-jaguer
+  #   command: yarn start
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - ./backend/src:/usr/src/jaguer/src
+  #     - ./backend/public:/usr/src/jaguer/public
+  #   environment:
+  #     NODE_ENV: 'development'
+  #     MONGO_MAIN_HOSTS: mongo:27017
+  #     MONGO_MAIN_PARAMS:
+  #     MONGO_JSON_OPTS: "{\"server\":{\"socketOptions\":{\"keepalive\":120}},\"replset\":{\"socketOptions\":{\"keepalive\":120}}}"
+  #     ZOOKEEPER_HOSTS: 'zookeeper'
+  #     REDIS_HOST: 'redis'
+  #     REDIS_PORT: 6379
+  #     SEEDTAG_API_KEY: 'e947f68afb0371afe92acf3fbcc541e31f0506b878ea765de51bea322ae8b56a6fb5e9efaa5236416fa14c6e27233e7c'
+
+#  angular_srv:
+#    build: frontend/.
+#    image: barreiro/angular 
+#    volumes:
+#      - datavolume:/usr/src/jaguer/
+
+  mongo_srv:
+    image: mongo:3.2
+    command: mongod --smallfiles
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+
+  nginx_srv:
+    build: nginx/.
+    image: barreiro/nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+
