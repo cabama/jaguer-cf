@@ -37,7 +37,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./ng-jaguer-madrid/dist:/usr/share/nginx/html
+      - ./ng-jaguer-madrid/dist/build:/usr/share/nginx/html
 
 volumes:
   angularvol: {}
