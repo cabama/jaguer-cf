@@ -1,3 +1,6 @@
 [submodule "ng-jaguer-madrid"]
 	path = ng-jaguer-madrid
 	url = https://github.com/cabama/ng-jaguer-madrid.git
+[submodule "node-jaguer-madrid"]
+	path = node-jaguer-madrid
+	url = https://github.com/cabama/node-jaguer-madrid.git
