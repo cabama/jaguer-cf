@@ -1,0 +1,3 @@
+[submodule "ng-jaguer-madrid"]
+	path = ng-jaguer-madrid
+	url = https://github.com/cabama/ng-jaguer-madrid.git
