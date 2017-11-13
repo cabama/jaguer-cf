@@ -2,17 +2,20 @@ version: '2'
 
 services:
 
-  node-jaguer:
+  node-api:
     build: node-jaguer-madrid/.
     image: barreiro/node-jaguer
     command: yarn start
+    # command: yarn debug
     ports:
       - "2525:80"
     volumes:
       - ./node-jaguer-madrid/src:/usr/src/jaguer/src
       - ./node-jaguer-madrid/public:/usr/src/jaguer/public
+    links:
+      - mongo
 
-  angular_srv:
+  angular:
     build: ng-jaguer-madrid/.
     image: barreiro/angular
     ports:
@@ -21,23 +24,25 @@ services:
     volumes:
       - ./ng-jaguer-madrid/src:/usr/src/app/src
       - ./ng-jaguer-madrid/dist:/usr/src/app/dist
-    command: ["ng", "build", "-prod", "--output-path=/usr/src/app/dist/build"]
+#   command: ["ng", "build", "-prod", "--output-path=/usr/src/app/dist/build"]
+    command: ["ng", "build", "-w", "--output-path=/usr/src/app/dist/build"]
 
-  mongo_jaguer:
+  mongo:
     image: mongo:3.2
     command: mongod --smallfiles
-    expose:
-      - "27017"
     ports:
       - "27017:27017"
 
-  nginx_jaguer:
+
+  nginx:
     build: nginx/.
     image: barreiro/nginx
     ports:
       - 80:80
     volumes:
       - ./ng-jaguer-madrid/dist/build:/usr/share/nginx/html
+    links:
+      - node-api:node-api
 
 volumes:
   angularvol: {}
