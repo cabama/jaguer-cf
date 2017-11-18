@@ -2,7 +2,7 @@ version: '2'
 
 services:
 
-  node-api:
+  nodeapi:
     build: node-jaguer-madrid/.
     image: barreiro/node-jaguer
     command: yarn start
@@ -30,6 +30,8 @@ services:
   mongo:
     image: mongo:3.2
     command: mongod --smallfiles
+    volumes:
+      - ./mongo:/data/db
     ports:
       - "27017:27017"
 
@@ -38,11 +40,9 @@ services:
     build: nginx/.
     image: barreiro/nginx
     ports:
-      - 80:80
+      - "80:80"
     volumes:
       - ./ng-jaguer-madrid/dist/build:/usr/share/nginx/html
     links:
-      - node-api:node-api
-
-volumes:
-  angularvol: {}
+      - nodeapi:nodeapi
+      - angular:angular
