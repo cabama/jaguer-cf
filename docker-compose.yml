@@ -8,10 +8,12 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./ng-jaguer-madrid/dist/build:/usr/share/nginx/html
+      - ./ng-jaguer-madrid/dist:/usr/share/nginx/angular
     links:
       - nodeapi:nodeapi
       - angular:angular
+    depends_on:
+      - angular
 
   nodeapi:
     build: node-jaguer-madrid/.
@@ -25,6 +27,8 @@ services:
       - ./node-jaguer-madrid/src:/usr/src/jaguer/src
       - ./node-jaguer-madrid/public:/usr/src/jaguer/public
     links:
+      - mongo
+    depends_on:
       - mongo
 
   angular:
