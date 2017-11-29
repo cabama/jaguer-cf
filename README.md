@@ -9,13 +9,13 @@ sh get-docker.sh
 <!-- Permiso de sudo se requiere logout -->
 sudo usermod -aG docker $(whoami)
 
-## Descargar Proyecto
+## Download Repositories
 
 ### Repositories
 
-git clone https://github.com/cabama/jaguer-cf.git
-git clone https://github.com/cabama/ng-jaguer-madrid.git
-git clone https://github.com/cabama/node-jaguer-madrid.git
+- https://github.com/cabama/jaguer-cf.git
+- https://github.com/cabama/ng-jaguer-madrid.git
+- https://github.com/cabama/node-jaguer-madrid.git
 
 ### Command line
 
