@@ -1,0 +1,64 @@
+version: '2'
+
+services:
+
+  nginx:
+    build: nginx/.
+    image: barreiro/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./ng-jaguer-madrid/dist:/usr/share/nginx/angular
+    links:
+      - nodeapi:nodeapi
+      - angular:angular
+    depends_on:
+      - angular
+
+  nodeapi:
+    build: node-jaguer-madrid/.
+    image: barreiro/node-jaguer
+    # command: yarn start
+    command: yarn run compile
+    ports:
+      - "2525:80"
+      - "9229:9229"
+    volumes:
+      - ./node-jaguer-madrid/src:/usr/src/jaguer/src
+      - ./node-jaguer-madrid/public:/usr/src/jaguer/public
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  angular:
+    build: ng-jaguer-madrid/.
+    image: barreiro/angular
+    ports:
+      - "4200:4200"
+      - "49153:49153"
+    volumes:
+      - ./ng-jaguer-madrid/src:/usr/src/app/src
+      - ./ng-jaguer-madrid/dist:/usr/src/app/dist
+    command: ["ng", "build", "-prod", "--output-path=/usr/src/app/dist/build"]
+#    command: ["ng", "build", "-w", "--output-path=/usr/src/app/dist/build"]
+
+  mongo:
+    image: mongo:3.2
+    command: mongod --smallfiles
+    volumes:
+      - ./mongo:/data/db
+    ports:
+      - "27017:27017"
+
+  jenkins:
+    build: jenkins/.
+    image: jenkins/cabamon    
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./jenkins/homecito:/var/
+      - .:/proyecto
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/bin/docker
