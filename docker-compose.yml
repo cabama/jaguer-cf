@@ -59,5 +59,6 @@ services:
       - 50000:50000
     volumes:
       - ./jenkins/homecito:/var/
+      - .:/proyecto
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/bin/docker
